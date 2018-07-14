@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CDistancia</string>
+    <string name="title_activity_calcular_distancia">Calcular Distancia</string>
+</resources>
