@@ -5,6 +5,7 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
-public class CalcularDistancia extends FragmentActivity  {
+public class CalcularDistancia extends AppCompatActivity {
 
     private GoogleMap mMap;
 
@@ -64,7 +65,7 @@ public class CalcularDistancia extends FragmentActivity  {
 
         switch (v.getId()){
             case R.id.B_CDistance:
-//                distance = "5 m";
+
                 EditText oLocation= (EditText) findViewById(R.id.Origin);
                 EditText dLocation= (EditText) findViewById(R.id.Destination);
 
@@ -74,7 +75,7 @@ public class CalcularDistancia extends FragmentActivity  {
                 List<Address> oListAddress=null;
                 List<Address> dListAddress=null;
 
-//                distance = origin+ ", "+ destination;
+
                 if(!origin.equals("") && !destination.equals("")){
                     Geocoder geocoder = new Geocoder(this);
 
@@ -96,7 +97,7 @@ public class CalcularDistancia extends FragmentActivity  {
                 }
 
                 Log.d("origin  = ", oLatitude+","+oLongitude );
-                Log.d("origin  = ", dLatitude+","+dLongitude );
+                Log.d("destination  = ", dLatitude+","+dLongitude );
 
 
                 if(!consultUrl.equals("")){
@@ -104,7 +105,7 @@ public class CalcularDistancia extends FragmentActivity  {
                     getDistanceMatrix.execute(consultUrl);
 
                 }
-                distanceLabel.setText("La distancia es "+ distance);
+
 
 
                 Log.d("location = ", distance);
@@ -138,9 +139,15 @@ public class CalcularDistancia extends FragmentActivity  {
             catch (IOException e){
                 e.printStackTrace();
             }
-            distance=parseDistanceMatrix(googleDistanceMatrixData);
+
 
             return googleDistanceMatrixData;
+        }
+
+        @Override
+        protected void onPostExecute(String str){
+            distance=parseDistanceMatrix(str);
+            distanceLabel.setText("La distancia es "+ distance);
         }
 
 
